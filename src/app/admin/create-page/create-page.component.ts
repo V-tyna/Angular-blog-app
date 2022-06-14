@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Post } from 'src/app/shared/interfaces';
 import { PostsService } from 'src/app/shared/posts.service';
+import { options } from '../configs/editor.options';
+import { AlertService } from '../shared/services/alert.service';
 @Component({
   selector: 'app-create-page',
   templateUrl: './create-page.component.html',
@@ -9,8 +11,12 @@ import { PostsService } from 'src/app/shared/posts.service';
 })
 export class CreatePageComponent implements OnInit {
   createPostForm!: FormGroup;
+  public froalaOptions: Object = options;
 
-  constructor(private postService: PostsService) { }
+  constructor(
+    private postService: PostsService,
+    private alert: AlertService
+  ) { }
 
   ngOnInit(): void {
     this.createPostForm = new FormGroup({
@@ -34,6 +40,7 @@ export class CreatePageComponent implements OnInit {
 
     this.postService.create(post).subscribe(() => {
       this.createPostForm.reset();
+      this.alert.success('Post was created.')
     })
   }
 

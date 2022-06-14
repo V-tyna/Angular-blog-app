@@ -1,22 +1,23 @@
-<div class="post">
+<div *ngIf="post$ | async as post; else loading">
+  <div class="post">
     <div class="header">
-        <h1>Post title</h1>
+      <h1>{{ post.title }}</h1>
 
-        <button 
-            routerLink="/"
-            class="btn btn-link"
-        >Go to home</button>
+      <button 
+        routerLink="/" 
+        class="btn btn-link"
+      >Go to home</button>
     </div>
 
     <div class="info">
-        <strong>Here is Author</strong>
-        <small>10.06.2022</small>
+      <strong>{{ post.author }}</strong>
+      <small>{{ post.date | date:'medium' }}</small>
     </div>
 
-    <div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis asperiores voluptate eligendi sed quod delectus repellendus distinctio quibusdam molestiae. Molestias dolorum aliquid necessitatibus ut et recusandae laboriosam consequuntur. Eum ipsa ducimus minima ab rerum consectetur officia distinctio ex quidem sapiente, repellat in? Veniam quisquam modi aliquam est neque. Eligendi, placeat?</p>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptates, unde et voluptatem temporibus id molestiae dicta expedita consequatur sed a delectus. Consequatur deleniti voluptatibus alias perspiciatis nobis voluptatum sint necessitatibus architecto temporibus eum. Delectus eum sint omnis similique totam quia molestias nihil ipsa, possimus velit qui cupiditate, commodi a quibusdam.</p>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque accusantium aliquid quia earum ipsam aut expedita eligendi voluptatum in cumque! Minus, dolor. Aliquam dolores sint aliquid officiis earum quibusdam? Ab amet deserunt commodi saepe cum pariatur natus ipsam, et, facilis nobis fugit veniam consectetur iusto est labore aliquid. Ipsa, vitae?</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt quaerat sapiente quam a, rerum blanditiis rem error exercitationem sit earum tenetur aliquam asperiores doloribus aliquid sequi eligendi molestias voluptate illum. Rerum nemo incidunt, ipsum quas id fuga, ipsam facere, obcaecati aut numquam corrupti accusantium iusto consectetur consequatur laboriosam hic molestias.</p>
-    </div>
+    <div [froalaView]="post.textContent"></div>
+  </div>
 </div>
+
+<ng-template #loading>
+  <p class="text-center">Post loading...</p>
+</ng-template>

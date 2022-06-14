@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Post } from 'src/app/shared/interfaces';
 import { PostsService } from 'src/app/shared/posts.service';
+import { AlertService } from '../shared/services/alert.service';
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard-page.component.html',
@@ -13,7 +14,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   removePostSubscription?: Subscription;
   searchStr: string = '';
 
-  constructor(private postsService: PostsService) { }
+  constructor(
+    private postsService: PostsService,
+    private alert: AlertService
+  ) { }
 
   ngOnInit(): void {
     this.postsSubscription = this.postsService.getAllPosts().subscribe({
@@ -26,7 +30,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   removePost(id: string | undefined) {
     this.removePostSubscription = this.postsService.removePost(id).subscribe({
       next: () => {
-        this.posts = this.posts.filter(post => post.id !== id)
+        this.posts = this.posts.filter(post => post.id !== id);
+        this.alert.danger('Post was deleted.')
       }
     });
   }
