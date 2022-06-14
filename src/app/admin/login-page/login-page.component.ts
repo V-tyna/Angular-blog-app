@@ -23,8 +23,10 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeRoute.queryParams.subscribe((params: Params) => {
-      if(params['loginAgain']) {
-        this.message = 'Please, login again';
+      if (params['loginAgain']) {
+        this.message = 'Please, login again.';
+      } else if (params['authFailed']) {
+        this.message = 'Session expired. Please, login again.';
       }
     })
 
@@ -51,15 +53,17 @@ export class LoginPageComponent implements OnInit {
       returnSecureToken: true
     };
 
-    this.authService.login(user).subscribe(() => {
-      this.form.reset();
-      this.router.navigate(['/admin', 'dashboard']);
-      this.submitted = true;
-    }, () => {
-      this.submitted = false;
-    });
+    this.authService.login(user).subscribe({
+      next: () => {
+        this.form.reset();
+        this.router.navigate(['/admin', 'dashboard']);
+        this.submitted = true;
+      },
+      complete: () => {
+        this.submitted = false;
+      }
+    })
 
-    
   }
 
 }
