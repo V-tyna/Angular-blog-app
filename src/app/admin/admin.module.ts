@@ -32,8 +32,8 @@ import { AlertService } from './shared/services/alert.service';
         RouterModule.forChild([
             {
                 path: '', component: AdminLayoutComponent, children: [
-                    { path: '', redirectTo: '/admin/login', pathMatch: 'full' },
-                    { path: 'login', component: LoginPageComponent },
+                    { path: '', redirectTo: '/login', pathMatch: 'full' },
+                    { path: 'login', redirectTo: '/login', pathMatch: 'full' },
                     { path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard] },
                     { path: 'create', component: CreatePageComponent, canActivate: [AuthGuard] },
                     { path: 'post/:id/edit', component: EditPageComponent, canActivate: [AuthGuard] },
@@ -42,7 +42,7 @@ import { AlertService } from './shared/services/alert.service';
         ])
     ],
     exports: [RouterModule],
-    providers: [AuthGuard, AlertService]
+    providers: [AlertService]
 })
 
 export class AdminModule {

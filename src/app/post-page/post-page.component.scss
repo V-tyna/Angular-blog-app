@@ -1,9 +1,18 @@
+.post-comments-container {
+    display: flex;
+}
+
 .post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 600px;
 
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 600px;
     }
 
     h1 {
@@ -11,6 +20,9 @@
     }
 
     .info {
+        display: flex;
+        justify-content: space-between;
+
         strong {
             margin-right: 1rem;
         }

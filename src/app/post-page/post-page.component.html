@@ -1,23 +1,26 @@
-<div *ngIf="post$ | async as post; else loading">
-  <div class="post">
-    <div class="header">
-      <h1>{{ post.title }}</h1>
+<div class="post-comments-container" *ngIf="post$ | async as post; else loading">
+  <div>
+    <div class="post">
+      <div class="header">
+        <h1>{{ post.title }}</h1>
 
-      <button 
-        routerLink="/" 
-        class="btn btn-link"
-      >Go to home</button>
+        <button routerLink="/" class="btn btn-link">Go to home</button>
+      </div>
+
+      <div class="info">
+        <strong>{{ post.author }}</strong>
+        <small>{{ post.date | date: "medium" }}</small>
+      </div>
+
+      <div [froalaView]="post.textContent"></div>
     </div>
-
-    <div class="info">
-      <strong>{{ post.author }}</strong>
-      <small>{{ post.date | date:'medium' }}</small>
-    </div>
-
-    <div [froalaView]="post.textContent"></div>
+    <app-post-create-comment [post]="post"></app-post-create-comment>
   </div>
-</div>
 
-<ng-template #loading>
-  <p class="text-center">Post loading...</p>
-</ng-template>
+  <!-- *ngIf="arr.length; else noComments" -->
+  <app-post-show-comments [post]="post"></app-post-show-comments>
+ </div> 
+
+  <ng-template #loading>
+    <p class="text-center">Post loading...</p>
+  </ng-template>

@@ -1,0 +1,23 @@
+.comment-container {
+  border: 1px solid #ccc;
+  padding: 15px;
+  width: 600px;
+}
+
+.form-comment {
+  width: 570px;
+}
+
+.author-comment-area {
+  display: flex;
+  flex-direction: row;
+
+  .author-name {
+    flex-basis: 30%;
+    margin-right: 15px;
+  }
+
+  .author-email {
+    flex-basis: 70%;
+  }
+}

@@ -31,6 +31,15 @@ export class AuthService {
       )
   }
 
+  signup(user: User): Observable<any> {
+    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.apiKey}`, user)
+      .pipe(
+        // @ts-ignore
+        tap(this.setToken),
+        catchError(this.handleError.bind(this))
+      )
+  }
+
   logout() {
     this.setToken(null);
   }
@@ -44,24 +53,25 @@ export class AuthService {
       const expDate = new Date((new Date).getTime() + +response!.expiresIn * 1000);
       localStorage.setItem('fb-token', response!.idToken);
       localStorage.setItem('fb-token-exp', expDate.toString());
+      localStorage.setItem('localId', response.localId);
     } else {
       localStorage.clear();
     }
   }
 
   private handleError(error: HttpErrorResponse) {
-    const {message} = error.error.error;
-    switch(message) {
-      case'INVALID_EMAIL':
+    const { message } = error.error.error;
+    switch (message) {
+      case 'INVALID_EMAIL':
         this.error$.next('Wrong email');
         break;
-      case'INVALID_PASSWORD':
-      this.error$.next('Wrong password');
+      case 'INVALID_PASSWORD':
+        this.error$.next('Wrong password');
         break;
-      case'EMAIL_NOT_FOUND':
+      case 'EMAIL_NOT_FOUND':
         this.error$.next('User with this email isn\'t registered');
-        break;  
+        break;
     }
-      return throwError(() => new Error(message));
+    return throwError(() => new Error(message));
   }
 }

@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Post } from '../../interfaces';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss']
+  selector: 'app-post-card',
+  templateUrl: './post-card.component.html',
+  styleUrls: ['./post-card.component.scss']
 })
-export class PostComponent implements OnInit {
+export class PostCardComponent implements OnInit {
 
   @Input() postC!: Post;
 

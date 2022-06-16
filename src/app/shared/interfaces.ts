@@ -7,6 +7,7 @@ export interface User {
 export interface FirebaseAuthResponse {
   idToken: string;
   expiresIn: string;
+  localId: string;
 }
 
 export interface FbCreateResponse {
@@ -20,4 +21,12 @@ export interface Post {
   textContent: string;
   date: Date;
   name?: string;
+}
+
+export interface Comment {
+  id?: string;
+  author: string;
+  comment: string;
+  follow: boolean;
+  date: Date;
 }

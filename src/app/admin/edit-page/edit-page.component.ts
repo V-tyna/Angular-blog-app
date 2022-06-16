@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 import { Post } from 'src/app/shared/interfaces';
-import { PostsService } from 'src/app/shared/posts.service';
+import { PostsService } from 'src/app/services/posts.service';
 import { AlertService } from '../shared/services/alert.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.pipe(
       switchMap((params: Params) => {
-        return this.postsService.getPostById(params['id']);
+        return this.postsService.getPostById(params['id'], params['title']);
       })
     ).subscribe({
       next: (post: Post) => {

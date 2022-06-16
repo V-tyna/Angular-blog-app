@@ -1,0 +1,47 @@
+<form class="card" [formGroup]="formRegister" (ngSubmit)="submit()">
+  <h2>Sign up</h2>
+      
+  <div 
+    class="form-control"
+    [ngClass]="{invalid: formRegister.get('email')?.touched && formRegister.get('email')?.invalid}"
+  >
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email">
+    <div 
+      *ngIf="formRegister.get('email')?.touched && formRegister.get('email')?.invalid"
+      class="validation"
+    >
+      <small *ngIf="formRegister.get('email')?.errors?.['required']">
+          Field "Email" shouldn't be empty
+      </small>
+      <small *ngIf="formRegister.get('email')?.errors?.['email']">
+          Enter valid email
+      </small>
+    </div>
+  </div>
+  <div 
+    class="form-control"
+    [ngClass]="{invalid: formRegister.get('password')?.touched && formRegister.get('password')?.invalid}">
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password">
+    <div 
+      *ngIf="formRegister.get('password')?.touched && formRegister.get('password')?.invalid"
+      class="validation"
+    >
+    <small *ngIf="formRegister.get('password')?.errors?.['required']">
+      Field "Password" shouldn't be empty
+    </small>
+    <small *ngIf="formRegister.get('password')?.errors?.['minlength']">
+      Password length should be at least {{formRegister.get('password')?.errors?.['minlength'].requiredLength}} symbols.
+      Now it is {{formRegister.get('password')?.errors?.['minlength'].actualLength}}
+    </small>
+    </div>
+  </div>
+
+  <button 
+    type="submit" 
+    class="btn btn-primary"
+    [disabled]="formRegister.invalid || submitted"
+  >Enter</button>
+</form>
+

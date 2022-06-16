@@ -1,0 +1,12 @@
+<div class="all-comments" *ngIf="comments$ | async as comments; else noComments">
+  <h2 class="text-center">Comments: </h2>
+  <app-post-comment-card
+    *ngFor="let comment of comments"
+    [commentC]="comment"
+  ></app-post-comment-card>
+
+</div>
+
+<ng-template #noComments>
+  <p class="text-center">No comments</p>
+</ng-template>
