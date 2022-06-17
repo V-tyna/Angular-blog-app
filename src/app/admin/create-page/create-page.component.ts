@@ -40,7 +40,7 @@ export class CreatePageComponent implements OnInit {
 
     this.postService.create(post).subscribe(() => {
       this.createPostForm.reset();
-      this.alert.success('Post was created.')
+      this.alert.success('Post was created.');
     })
   }
 

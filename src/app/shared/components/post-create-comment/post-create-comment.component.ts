@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, Observable, Subscription, tap } from 'rxjs';
+import { AlertService } from 'src/app/admin/shared/services/alert.service';
 import { AuthService } from 'src/app/admin/shared/services/auth.service';
 import { CommentsService } from 'src/app/services/comments.service';
 import { Comment, Post } from '../../interfaces';
@@ -17,9 +18,11 @@ export class PostCreateCommentComponent implements OnInit, OnDestroy {
   public createComment!: FormGroup;
   private commentSubscription?: Subscription;
 
-  constructor(private commentsService: CommentsService,
-    public auth: AuthService) {
-   }
+  constructor(
+    private commentsService: CommentsService,
+    public auth: AuthService,
+    private alert: AlertService
+  ) { }
 
   ngOnInit(): void {
     this.createComment = new FormGroup({
@@ -36,11 +39,12 @@ export class PostCreateCommentComponent implements OnInit, OnDestroy {
       follow: this.createComment.value.follow,
       date: new Date()
     }
-    console.log('Comment: ', comment);
-
+    
     this.commentSubscription = this.commentsService.createComment(comment, this.post.id!, this.post.title)
     .subscribe(() => {
       this.createComment.reset();
+      this.alert.success('Comment was added.');
+      console.log('something happening');
     })
     
   }

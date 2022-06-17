@@ -61,6 +61,7 @@ export class PostsService {
     return this.http.get<Post>(`${environment.fbDbUrl}/posts.json`)
       //@ts-ignore
       .pipe(map((res: {[key: string]: any})=> {
+        
         const result: Array<Post> = [];
         const data = Object.values(res);
         const keys = Object.keys(res);
@@ -70,17 +71,30 @@ export class PostsService {
           obj.id = keys[i];
           //@ts-ignore
           return result.push(obj)
-        }))        
+        }))     
+           
       //@ts-ignore
         return result.find(obj => obj.id === id && obj.title === title);
       }));
   }
 
-  removePost(id: string | undefined): Observable<void> {
-    return this.http.delete<void>(`${environment.fbDbUrl}/posts/${id}.json`);
+  getUserPostById(id: string): Observable<Post> {
+    const uid = localStorage.getItem('localId');
+    //@ts-ignore
+    return this.http.get<Post>(`${environment.fbDbUrl}/posts/${uid}/${id}.json`)
+      //@ts-ignore
+      .pipe(map((res: {[key: string]: any})=> {
+        return res;
+      }));
   }
 
-  updatePost(post: Post) {
-    return this.http.patch<Post>(`${environment.fbDbUrl}/posts/${post.id}.json`, post);
+  removePost(id: string | undefined): Observable<void> {
+    const uid = localStorage.getItem('localId');
+    return this.http.delete<void>(`${environment.fbDbUrl}/posts/${uid}/${id}.json`);
+  }
+
+  updatePost(id: string, post: Post) {
+    const uid = localStorage.getItem('localId');
+    return this.http.patch<Post>(`${environment.fbDbUrl}/posts/${uid}/${id}.json`, post);
   }
 }
