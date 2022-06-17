@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { map, Observable, Subscription, tap } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { AlertService } from 'src/app/admin/shared/services/alert.service';
 import { AuthService } from 'src/app/admin/shared/services/auth.service';
 import { CommentsService } from 'src/app/services/comments.service';
@@ -41,10 +41,11 @@ export class PostCreateCommentComponent implements OnInit, OnDestroy {
     }
     
     this.commentSubscription = this.commentsService.createComment(comment, this.post.id!, this.post.title)
-    .subscribe(() => {
+    .subscribe((newComment) => {
+      const comments = this.commentsService.comments$.getValue();
+      this.commentsService.comments$.next([...comments, newComment]);
       this.createComment.reset();
       this.alert.success('Comment was added.');
-      console.log('something happening');
     })
     
   }

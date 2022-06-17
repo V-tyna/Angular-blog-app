@@ -11,9 +11,7 @@ export class PostCommentCardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log('Comment: ', this.commentC);
-    
+  ngOnInit(): void { 
   }
 
 }
