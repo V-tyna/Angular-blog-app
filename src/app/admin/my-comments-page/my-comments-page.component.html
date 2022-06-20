@@ -1,0 +1,39 @@
+<div class="all-comments" *ngIf="comments?.length; else noComments">
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Author</th>
+        <th>Follow</th>
+        <th>Data</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let comment of comments; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ comment.author }}</td>
+        <td *ngIf="comment.follow; else no">{{ 'yes' }}</td>
+        <td>{{ comment.date | date: "medium" }}</td>
+        <td>
+          <button
+            class="btn btn-link open"
+            [routerLink]="['/admin', 'my_comment', comment.id, 'edit']"
+          >
+            Edit
+          </button>
+          <a (click)="removeComment(comment.postTitle, comment.id!)">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noComments>
+  <p class="text-center">No comments...</p>
+</ng-template>
+
+<ng-template #no>
+  <td>no</td>
+</ng-template>
+
