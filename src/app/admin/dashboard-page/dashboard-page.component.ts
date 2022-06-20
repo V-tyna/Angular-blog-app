@@ -9,10 +9,10 @@ import { AlertService } from '../shared/services/alert.service';
   styleUrls: ['./dashboard-page.component.scss']
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
-  posts: Post[] = [];
-  postsSubscription?: Subscription;
-  removePostSubscription?: Subscription;
-  searchStr: string = '';
+  public posts: Post[] = [];
+  public searchStr: string = '';
+  private postsSubscription?: Subscription;
+  private removePostSubscription?: Subscription;
 
   constructor(
     private postsService: PostsService,
@@ -20,28 +20,21 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.postsSubscription = this.postsService.getAllUsersPosts().subscribe({
-      next: posts => {
-        this.posts = posts;
-      }
+    this.postsSubscription = this.postsService.getAllUsersPosts().subscribe((posts) => {
+      this.posts = posts;
     })
   }
 
   removePost(id: string | undefined) {
-    this.removePostSubscription = this.postsService.removePost(id).subscribe({
-      next: () => {
-        this.posts = this.posts.filter(post => post.id !== id);
-        this.alert.danger('Post was deleted.')
-      }
-    });
+    this.removePostSubscription = this.postsService.removePost(id).subscribe(() => {
+      this.posts = this.posts.filter(post => post.id !== id);
+      this.alert.danger('Post was deleted.');
+    }
+    );
   }
 
   ngOnDestroy(): void {
-    if (this.postsSubscription) {
-      this.postsSubscription.unsubscribe();
-    }
-    if (this.removePostSubscription) {
-      this.removePostSubscription.unsubscribe();
-    }
+    this.postsSubscription?.unsubscribe();
+    this.removePostSubscription?.unsubscribe();
   }
 }

@@ -2,6 +2,7 @@ import { AfterContentChecked, AfterContentInit, AfterViewInit, Component, DoChec
 import { Subscription } from 'rxjs';
 import { CommentsService } from 'src/app/services/comments.service';
 import { Comment } from 'src/app/shared/interfaces';
+import { AlertService } from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-my-comments-page',
@@ -12,33 +13,36 @@ export class MyCommentsPageComponent implements OnInit, OnChanges, OnDestroy {
 
   public comments?: Comment[];
   private userCommentsSubscription?: Subscription;
-  private removeSubscription?: Subscription;
+  private removeCommentSubscription?: Subscription;
 
   constructor(
-    private commentsService: CommentsService
+    private commentsService: CommentsService,
+    private alert: AlertService
   ) { }
 
   ngOnInit(): void {
     this.comments = [];
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe(comments => {     
+    this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe(comments => {
       this.comments = comments;
     });
   }
 
-  removeComment(title: string, id: string) { 
-    this.removeSubscription = this.commentsService.removeComment(title, id).subscribe();
+  ngOnChanges(changes: SimpleChanges): void {
+    this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe(comments => {
+      this.comments = comments;
+    });
   }
 
-  editComment(id:string) {
-
+  removeComment(title: string, id: string) {
+    this.removeCommentSubscription = this.commentsService.removeComment(title, id).subscribe(() => {
+      this.comments = this.comments?.filter(comment => comment.id !== id);
+      this.alert.danger('Comment was deleted.');
+    });
   }
 
   ngOnDestroy(): void {
-      this.userCommentsSubscription?.unsubscribe();
-      this.removeSubscription?.unsubscribe();
+    this.userCommentsSubscription?.unsubscribe();
+    this.removeCommentSubscription?.unsubscribe();
   }
 
 }

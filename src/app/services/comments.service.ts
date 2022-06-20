@@ -15,7 +15,7 @@ export class CommentsService {
   constructor(private http: HttpClient) {
   }
 
-  createComment(comment: Comment, title: string) {
+  createComment(comment: Comment, title: string): Observable<Comment> {
     return this.http.post<Comment>(`${environment.fbDbUrl}/comments//${title}.json`, comment)
       //@ts-ignore
       .pipe(map((response: FbCreateResponse) => {
@@ -28,38 +28,46 @@ export class CommentsService {
       }));
   }
 
-  writeCommentId(commentWithId: Comment) {
+  writeCommentId(commentWithId: Comment): Observable<Comment> {
     return this.http.patch<Comment>(`${environment.fbDbUrl}/comments/${commentWithId.postTitle}/${commentWithId.id}.json`, commentWithId);
   }
 
-  getAllComments(title: string): Observable<any> {
-    return this.http.get(`${environment.fbDbUrl}/comments/${title}.json`)
-      .pipe(map((res) => {
+  getAllComments(title: string): Observable<Comment[] | undefined> {
+    return this.http.get<Comment>(`${environment.fbDbUrl}/comments/${title}.json`)
+      .pipe(map((res:  Comment) => {
         if (!res) return;
-        const comments = Object.values(res);
+        const comments: Comment[] = Object.values(res);
         this.comments$.next(comments);
-        console.log('Comments all ever: ', res);
 
         return comments;
       }));
   }
 
-  getAllUserComments() {
+  getAllUserComments(): Observable<Comment[]>  {
     return this.http.get(`${environment.fbDbUrl}/comments.json`).pipe(
       map(res => {
 
-        const result: Array<any> = [];
-        Object.values(res).map(val => (Object.values(val).map(obj => result.push(obj))));
+        const result: Array<Comment> = [];
+        Object.values(res).map(val => (Object.values(val).map((obj: any) => result.push(obj))));
+        const userComments = result.filter(obj => obj.uid === this.uid);
 
-        return result.filter(obj => obj.uid === this.uid)
-      }
-      )
-    )
-
+        return userComments;
+      }));
   }
 
-  removeComment(postTitle: string, commentId: string) {
-    return this.http.delete(`${environment.fbDbUrl}/comments/${postTitle}/${commentId}.json`);
+  getCommentById(postTitle: string, id: string): Observable<Comment> {
+    console.log('Post by id response: ', this.http.get<Comment>(`${environment.fbDbUrl}/comments/${postTitle}/${id}.json`).subscribe(res => console.log(res)
+    ));
+    
+    return this.http.get<Comment>(`${environment.fbDbUrl}/comments/${postTitle}/${id}.json`);
+  }
+
+  editComment(comment: Comment,): Observable<Comment> {
+    return this.http.patch<Comment>(`${environment.fbDbUrl}/comments/${comment.postTitle}/${comment.id}.json`, comment);
+  }
+
+  removeComment(postTitle: string, commentId: string): Observable<Comment>  {
+    return this.http.delete<Comment>(`${environment.fbDbUrl}/comments/${postTitle}/${commentId}.json`);
   }
 
 }

@@ -13,8 +13,9 @@ export class PostShowCommentsComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() public post!: Post;
 
-  private commentsSubscription?: Subscription;
   public comments: Comment[] = [];
+  private commentsSubscription?: Subscription;
+  private commentsArraySubscription?: Subscription;
 
   constructor(private commentsService: CommentsService) { }
 
@@ -25,13 +26,14 @@ export class PostShowCommentsComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.commentsSubscription = this.commentsService.getAllComments(this.post.title).subscribe();
 
-    this.commentsService.comments$.subscribe((comments: Comment[]) => { 
+    this.commentsArraySubscription = this.commentsService.comments$.subscribe((comments: Comment[]) => { 
       this.comments = comments;
     })
   }
 
   ngOnDestroy(): void {
     this.commentsSubscription?.unsubscribe();
+    this.commentsArraySubscription?.unsubscribe();
   }
 
 }

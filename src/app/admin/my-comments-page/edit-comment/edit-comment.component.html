@@ -1,0 +1,42 @@
+<div *ngIf="formEditComment; else loading">
+  <form [formGroup]="formEditComment" (ngSubmit)="submitEditComment()">
+    <div
+      class="form-control"
+      [ngClass]="{
+        invalid:
+          formEditComment.get('author')?.touched &&
+          formEditComment.get('author')?.invalid
+      }"
+    >
+      <label for="author">Comment author:</label>
+      <input id="author" type="text" formControlName="author" />
+      <div
+        *ngIf="
+          formEditComment.get('author')?.touched &&
+          formEditComment.get('author')?.invalid
+        "
+        class="validation"
+      >
+        <small *ngIf="formEditComment.get('author')?.errors?.['required']">
+          Field "Comment author" shouldn't be empty
+        </small>
+      </div>
+    </div>
+
+    <div class="form-control">
+      <div [froalaEditor] formControlName="comment"></div>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="formEditComment.invalid || submitted"
+    >
+      Update comment
+    </button>
+  </form>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>

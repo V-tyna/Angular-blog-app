@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AuthGuard } from './shared/services/auth.guard';
 import { SearchPipe } from './shared/pipes/search.pipe';
 import { MyCommentsPageComponent } from './my-comments-page/my-comments-page.component';
+import { EditCommentComponent } from './my-comments-page/edit-comment/edit-comment.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { MyCommentsPageComponent } from './my-comments-page/my-comments-page.com
         CreatePageComponent,
         EditPageComponent,
         SearchPipe,
-        MyCommentsPageComponent
+        MyCommentsPageComponent,
+        EditCommentComponent
     ],
     imports: [
         CommonModule,
@@ -37,6 +39,7 @@ import { MyCommentsPageComponent } from './my-comments-page/my-comments-page.com
                     { path: 'create', component: CreatePageComponent, canActivate: [AuthGuard] },
                     { path: 'comments', component: MyCommentsPageComponent, canActivate: [AuthGuard] },
                     { path: 'post/:id/:title/edit', component: EditPageComponent, canActivate: [AuthGuard] },
+                    { path: 'my_comment/:title/:id/edit', component: EditCommentComponent, canActivate: [AuthGuard] },
                 ]
             }
         ])
