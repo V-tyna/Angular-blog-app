@@ -29,4 +29,6 @@ export interface Comment {
   comment: string;
   follow: boolean;
   date: Date;
+  uid: string;
+  postTitle: string;
 }

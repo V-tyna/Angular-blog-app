@@ -10,36 +10,56 @@ import { Comment } from '../shared/interfaces';
 
 export class CommentsService {
   public comments$ = new BehaviorSubject<Comment[]>([]);
+  private uid: string | null = localStorage.getItem('localId');
 
   constructor(private http: HttpClient) {
   }
 
-  createComment(comment: Comment, id: string, title: string) {
-    return this.http.post<Comment>(`${environment.fbDbUrl}/comments/${id}/${title}.json`, comment)
+  createComment(comment: Comment, title: string) {
+    return this.http.post<Comment>(`${environment.fbDbUrl}/comments//${title}.json`, comment)
       //@ts-ignore
       .pipe(map((response: FbCreateResponse) => {
-        return {
+        const newComment = {
           ...comment,
           id: response.name,
           date: new Date(comment.date)
         };
+        return newComment;
       }));
   }
 
-  getAllComments(id: string, title: string): Observable<any> {
-    return this.http.get(`${environment.fbDbUrl}/comments/${id}/${title}.json`)
-      .pipe(map((res: { [key: string]: any }) => {
+  writeCommentId(commentWithId: Comment) {
+    return this.http.patch<Comment>(`${environment.fbDbUrl}/comments/${commentWithId.postTitle}/${commentWithId.id}.json`, commentWithId);
+  }
+
+  getAllComments(title: string): Observable<any> {
+    return this.http.get(`${environment.fbDbUrl}/comments/${title}.json`)
+      .pipe(map((res) => {
         if (!res) return;
-        const comments = Object.keys(res).map(key => {
-          return {
-            ...res[key],
-            id: key,
-            date: new Date(res[key].date)
-          }
-        });
+        const comments = Object.values(res);
         this.comments$.next(comments);
+        console.log('Comments all ever: ', res);
+
         return comments;
       }));
+  }
+
+  getAllUserComments() {
+    return this.http.get(`${environment.fbDbUrl}/comments.json`).pipe(
+      map(res => {
+
+        const result: Array<any> = [];
+        Object.values(res).map(val => (Object.values(val).map(obj => result.push(obj))));
+
+        return result.filter(obj => obj.uid === this.uid)
+      }
+      )
+    )
+
+  }
+
+  removeComment(postTitle: string, commentId: string) {
+    return this.http.delete(`${environment.fbDbUrl}/comments/${postTitle}/${commentId}.json`);
   }
 
 }

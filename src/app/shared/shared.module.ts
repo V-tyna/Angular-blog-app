@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     FroalaEditorModule,
     FroalaViewModule,
-    AlertComponent
+    AlertComponent, CommonModule
   ],
   declarations: [
     AlertComponent

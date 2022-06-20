@@ -1,4 +1,4 @@
-<div class="all-comments" *ngIf="comments; else noComments">
+<div class="all-comments" *ngIf="comments?.length; else noComments">
   <h2 class="text-center">Comments: </h2>
   <app-post-comment-card
     *ngFor="let comment of comments"
@@ -8,5 +8,5 @@
 </div>
 
 <ng-template #noComments>
-  <p class="text-center">No comments</p>
+  <p class="text-center">No comments...</p>
 </ng-template>

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, Subscription } from 'rxjs';
 import { AlertService } from 'src/app/admin/shared/services/alert.service';
@@ -17,6 +17,7 @@ export class PostCreateCommentComponent implements OnInit, OnDestroy {
 
   public createComment!: FormGroup;
   private commentSubscription?: Subscription;
+  private uid: string | null = localStorage.getItem('localId');
 
   constructor(
     private commentsService: CommentsService,
@@ -28,7 +29,7 @@ export class PostCreateCommentComponent implements OnInit, OnDestroy {
     this.createComment = new FormGroup({
       author: new FormControl(null, Validators.required),
       comment: new FormControl(null, Validators.required),
-      follow: new FormControl(null)
+      follow: new FormControl(false)
     })  
   }
 
@@ -36,18 +37,21 @@ export class PostCreateCommentComponent implements OnInit, OnDestroy {
     const comment: Comment = {
       author: this.createComment.value.author,
       comment: this.createComment.value.comment,
-      follow: this.createComment.value.follow,
-      date: new Date()
+      follow: this.createComment.value.follow || false,
+      date: new Date(),
+      uid: this.uid || '',
+      postTitle: this.post.title
     }
     
-    this.commentSubscription = this.commentsService.createComment(comment, this.post.id!, this.post.title)
-    .subscribe((newComment) => {
+    this.commentSubscription = this.commentsService.createComment(comment, this.post.title)
+    .subscribe((newComment: Comment) => {
+      console.log("New comment", newComment);
       const comments = this.commentsService.comments$.getValue();
       this.commentsService.comments$.next([...comments, newComment]);
       this.createComment.reset();
       this.alert.success('Comment was added.');
-    })
-    
+      this.commentsService.writeCommentId(newComment).subscribe();  
+    }); 
   }
 
   ngOnDestroy(): void {
