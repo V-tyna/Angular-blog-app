@@ -46,7 +46,7 @@ export class CommentsService {
   getAllUserComments(): Observable<Comment[]>  {
     return this.http.get(`${environment.fbDbUrl}/comments.json`).pipe(
       map(res => {
-
+        if(!res) return [];
         const result: Array<Comment> = [];
         Object.values(res).map(val => (Object.values(val).map((obj: any) => result.push(obj))));
         const userComments = result.filter(obj => obj.uid === this.uid);

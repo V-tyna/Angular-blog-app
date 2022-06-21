@@ -1,6 +1,7 @@
 import { AfterContentChecked, AfterContentInit, AfterViewInit, Component, DoCheck, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommentsService } from 'src/app/services/comments.service';
+import { sortByDate } from 'src/app/shared/helpers/sortByDate';
 import { Comment } from 'src/app/shared/interfaces';
 import { AlertService } from '../shared/services/alert.service';
 
@@ -23,6 +24,7 @@ export class MyCommentsPageComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.comments = [];
     this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe(comments => {
+      sortByDate(comments);
       this.comments = comments;
     });
   }

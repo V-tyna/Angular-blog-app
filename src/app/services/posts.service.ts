@@ -27,6 +27,7 @@ export class PostsService {
   getAllPosts(): Observable<Post[]>  { 
     return this.http.get(`${environment.fbDbUrl}/posts.json`)
       .pipe(map((res: {[key: string]: any}) => {
+        if(!res) return [];
         const result: Array<Post> = [];
         const data = Object.values(res);
         const keys = Object.keys(res);
@@ -46,6 +47,7 @@ export class PostsService {
     const uid = localStorage.getItem('localId');
     return this.http.get(`${environment.fbDbUrl}/posts/${uid}.json`)
       .pipe(map((res: {[key: string]: any}) => {
+        if(!res) return [];
         return Object.keys(res).map( key => {
           return {
             ...res[key],
@@ -61,7 +63,8 @@ export class PostsService {
     return this.http.get<Post>(`${environment.fbDbUrl}/posts.json`)
       //@ts-ignore
       .pipe(map((res: {[key: string]: any})=> {
-        
+        if(!res) return;
+
         const result: Array<Post> = [];
         const data = Object.values(res);
         const keys = Object.keys(res);
@@ -84,6 +87,7 @@ export class PostsService {
     return this.http.get<Post>(`${environment.fbDbUrl}/posts/${uid}/${id}.json`)
       //@ts-ignore
       .pipe(map((res: {[key: string]: any})=> {
+        if(!res) return;
         return res;
       }));
   }

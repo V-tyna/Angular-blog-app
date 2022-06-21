@@ -1,0 +1,19 @@
+.pagination {
+  display: flex;
+  align-items: center;
+
+  p {
+    text-align: center;
+  }
+}
+
+.prev, .next {
+  margin: 10px;
+}
+
+.prev:hover, .next:hover {
+  margin: 10px;
+  background-color: #333333;
+  color: #ccc;
+  transition: all 0.2s ease-in;
+}

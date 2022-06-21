@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Post } from 'src/app/shared/interfaces';
 import { PostsService } from 'src/app/services/posts.service';
 import { AlertService } from '../shared/services/alert.service';
+import { sortByDate } from 'src/app/shared/helpers/sortByDate';
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard-page.component.html',
@@ -21,6 +22,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.postsSubscription = this.postsService.getAllUsersPosts().subscribe((posts) => {
+      sortByDate(posts);
       this.posts = posts;
     })
   }

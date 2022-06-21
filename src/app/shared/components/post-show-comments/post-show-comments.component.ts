@@ -1,8 +1,10 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CommentsService } from 'src/app/services/comments.service';
+import { sortByDate } from '../../helpers/sortByDate';
 import { Post } from '../../interfaces';
 import { Comment } from '../../interfaces';
+export { sortByDate } from '../../helpers/sortByDate';
 
 @Component({
   selector: 'app-post-show-comments',
@@ -27,7 +29,10 @@ export class PostShowCommentsComponent implements OnInit, OnDestroy, OnChanges {
     this.commentsSubscription = this.commentsService.getAllComments(this.post.title).subscribe();
 
     this.commentsArraySubscription = this.commentsService.comments$.subscribe((comments: Comment[]) => { 
-      this.comments = comments;
+      console.log(comments);
+      
+      const sortedComments = sortByDate([...comments]); 
+      this.comments = sortedComments;
     })
   }
 

@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupPageComponent } from './admin/signup-page/signup-page/signup-page.component';
 import { PostShowCommentsComponent } from './shared/components/post-show-comments/post-show-comments.component';
 import { PostCommentCardComponent } from './shared/components/post-comment-card/post-comment-card.component';
+import { PaginationComponent } from './home-page/pagination/pagination.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -32,7 +33,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
     PostCreateCommentComponent,
     PostShowCommentsComponent,
     PostCommentCardComponent,
-    SignupPageComponent
+    SignupPageComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

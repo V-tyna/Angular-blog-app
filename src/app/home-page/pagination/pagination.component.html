@@ -1,0 +1,11 @@
+<div class="pagination">
+  <button 
+    class="prev btn"
+    (click)="previousPage()"
+  >Previous</button>
+  <p>Page: <strong> {{ currentPageIndex + 1 }} </strong> from <strong> {{ numberOfPages }} </strong></p>
+  <button 
+    class="next btn"
+    (click)="nextPage()"
+  >Next</button>
+</div>

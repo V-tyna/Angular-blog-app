@@ -1,6 +1,13 @@
-<div class="posts" *ngIf="posts$ | async as posts; else loading">
+<div class="posts" *ngIf="posts; else loading">
+  <app-pagination
+    [pageIndex]="pageIndex"
+    [currentPageIndex]="currentPageIndex"
+    [numberOfPages]="numberOfPages"
+    [POSTS_PER_PAGE]="POSTS_PER_PAGE"
+    (slicedPosts)="getParamsForPagination($event)"
+  ></app-pagination>
   <app-post-card
-    *ngFor="let post of posts"
+    *ngFor="let post of currentPosts"
     [postC]="post"
   ></app-post-card>
 </div>
