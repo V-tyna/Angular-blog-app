@@ -28,13 +28,10 @@ export class EditCommentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getCommentSubscription = this.route.params.pipe(
       switchMap((params: Params) => {
-        console.log('Comment for edit params: ', params['title'], params['id']);
-        
         return this.commentsService.getCommentById(params['title'], params['id']);
       })
     ).subscribe((comment: Comment) => {
       this.comment = comment;
-      console.log('Edit post for change', comment);
 
       this.formEditComment = new FormGroup({
         author: new FormControl(comment.author, Validators.required),
@@ -52,12 +49,12 @@ export class EditCommentComponent implements OnInit, OnDestroy {
       author: this.formEditComment?.value.author,
       comment: this.formEditComment?.value.comment
     }
-    
+
     this.editCommentSubscription = this.commentsService.editComment(newComment).subscribe(() => {
       this.submitted = false;
-      this.alert.warning('Comment was updated.');
+      this.alert.success('Comment was updated.');
     });
-    
+
   }
 
   ngOnDestroy(): void {

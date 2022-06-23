@@ -22,8 +22,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.postsSubscription = this.postsService.getAllUsersPosts().subscribe((posts) => {
-      sortByDate(posts);
-      this.posts = posts;
+      this.posts = sortByDate(posts);
     })
   }
 

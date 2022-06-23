@@ -1,11 +1,40 @@
 <div class="pagination">
-  <button 
-    class="prev btn"
-    (click)="previousPage()"
-  >Previous</button>
-  <p>Page: <strong> {{ currentPageIndex + 1 }} </strong> from <strong> {{ numberOfPages }} </strong></p>
-  <button 
-    class="next btn"
-    (click)="nextPage()"
-  >Next</button>
+  <button class="prev btn" (click)="previousPage()">Previous</button>
+  <p>
+    Page: <strong> {{ pageIndex + 1 }} </strong> from
+    <strong> {{ numberOfPages }} </strong>
+  </p>
+  <button
+    class="page-button"
+    *ngIf="currentButtons[0] > 0; else emptyButton"
+    (click)="previousButtons()"
+  >
+    ...
+  </button>
+  <button
+    class="page-button"
+    *ngFor="let page of currentButtons"
+    (click)="getPage(page)"
+  >
+    {{ page + 1 }}
+  </button>
+  <button
+    class="page-button"
+    *ngIf="currentButtons[currentButtons.length - 1] !== pages.length - 1; else emptyButton"
+    (click)="nextButtons()"
+  >
+    ...
+  </button>
+  <button class="next btn" (click)="nextPage()">Next</button>
+  <select class="select-posts-per-page" (change)="setPostPerPage($event)">
+    <option value="3">3</option>
+    <option value="5" selected>5</option>
+    <option value="7">7</option>
+    <option value="10">10</option>
+  </select>
 </div>
+
+<ng-template #emptyButton>
+  <button
+    class="page-button"></button>
+</ng-template>

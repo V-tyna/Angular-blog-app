@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Post } from '../shared/interfaces';
 import { PostsService } from '../services/posts.service';
@@ -11,10 +11,8 @@ import { sortByDate } from '../shared/helpers/sortByDate';
 })
 export class HomePageComponent implements OnInit, OnDestroy {
 
-  public posts?: Post[];
-  public currentPosts?: Post[];
-  public pageIndex: number = 0;
-  public currentPageIndex: number = 0;
+  public posts: Post[] = [];
+  public currentPosts: Post[] = [];
   public numberOfPages: number = 0;
   public POSTS_PER_PAGE: number = 5;
   private postSubscription?: Subscription;
@@ -25,12 +23,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.postSubscription = this.postsService.getAllPosts().subscribe((posts) => {
-      const sortedPosts = sortByDate([...posts]);
-      this.posts = sortedPosts;
-      if(!this.currentPosts) {
-        this.currentPosts = this.posts.slice(0, 5);
-      }
-      if(this.posts) {
+      this.posts = sortByDate(posts);
+      this.currentPosts = this.posts.slice(0, 5);
+      if (this.posts.length) {
         this.numberOfPages = Math.ceil(this.posts.length / this.POSTS_PER_PAGE);
       }
     });
@@ -40,11 +35,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.postSubscription?.unsubscribe();
   }
 
-  getParamsForPagination(arrToEmit: Array<number>) {  
-    this.currentPageIndex = arrToEmit[0];
-    const start = arrToEmit[1];
-    const end = arrToEmit[2];
-    if(this.posts && end - this.POSTS_PER_PAGE >= this.posts.length) return;
+  getParamsForPagination(arrToEmit: Array<number>) {
+    const start = arrToEmit[0];
+    const end = arrToEmit[1];
+    this.POSTS_PER_PAGE = arrToEmit[1];
+    if (this.posts && end - this.POSTS_PER_PAGE >= this.posts.length) return;
     this.currentPosts = this.posts?.slice(start, end);
   }
 

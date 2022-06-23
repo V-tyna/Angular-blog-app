@@ -13,11 +13,10 @@ import { Comment, Post } from '../../interfaces';
 })
 export class PostCreateCommentComponent implements OnInit, OnDestroy {
 
-  @Input() public post!: Post;
-
   public createComment!: FormGroup;
   private commentSubscription?: Subscription;
   private uid: string | null = localStorage.getItem('localId');
+  @Input() public post!: Post;
 
   constructor(
     private commentsService: CommentsService,
@@ -30,7 +29,7 @@ export class PostCreateCommentComponent implements OnInit, OnDestroy {
       author: new FormControl(null, Validators.required),
       comment: new FormControl(null, Validators.required),
       follow: new FormControl(false)
-    })  
+    })
   }
 
   submit() {
@@ -42,16 +41,15 @@ export class PostCreateCommentComponent implements OnInit, OnDestroy {
       uid: this.uid || '',
       postTitle: this.post.title
     }
-    
+
     this.commentSubscription = this.commentsService.createComment(comment, this.post.title)
     .subscribe((newComment: Comment) => {
-      console.log("New comment", newComment);
       const comments = this.commentsService.comments$.getValue();
       this.commentsService.comments$.next([...comments, newComment]);
       this.createComment.reset();
       this.alert.success('Comment was added.');
-      this.commentsService.writeCommentId(newComment).subscribe();  
-    }); 
+      this.commentsService.writeCommentId(newComment).subscribe();
+    });
   }
 
   ngOnDestroy(): void {

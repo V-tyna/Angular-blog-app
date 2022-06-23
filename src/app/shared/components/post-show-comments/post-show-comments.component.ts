@@ -28,11 +28,8 @@ export class PostShowCommentsComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.commentsSubscription = this.commentsService.getAllComments(this.post.title).subscribe();
 
-    this.commentsArraySubscription = this.commentsService.comments$.subscribe((comments: Comment[]) => { 
-      console.log(comments);
-      
-      const sortedComments = sortByDate([...comments]); 
-      this.comments = sortedComments;
+    this.commentsArraySubscription = this.commentsService.comments$.subscribe((comments: Comment[]) => {
+      this.comments = sortByDate(comments);
     })
   }
 

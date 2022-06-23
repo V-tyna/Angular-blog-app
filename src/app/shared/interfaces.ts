@@ -10,10 +10,6 @@ export interface FirebaseAuthResponse {
   localId: string;
 }
 
-export interface FbCreateResponse {
-  name: string;
-}
-
 export interface Post {
   id?: string;
   title: string;
@@ -31,4 +27,5 @@ export interface Comment {
   date: Date;
   uid: string;
   postTitle: string;
+  name?: string;
 }

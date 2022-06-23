@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
           auth: this.auth.token
         }
       })
-    } 
+    }
     return next.handle(req)
     .pipe(
       catchError((error: HttpErrorResponse) => {

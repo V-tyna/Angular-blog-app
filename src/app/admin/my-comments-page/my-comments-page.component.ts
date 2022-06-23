@@ -24,14 +24,13 @@ export class MyCommentsPageComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.comments = [];
     this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe(comments => {
-      sortByDate(comments);
-      this.comments = comments;
+      this.comments = sortByDate(comments);
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe(comments => {
-      this.comments = comments;
+      this.comments = sortByDate(comments);
     });
   }
 

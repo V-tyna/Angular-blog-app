@@ -17,8 +17,7 @@ export class CommentsService {
 
   createComment(comment: Comment, title: string): Observable<Comment> {
     return this.http.post<Comment>(`${environment.fbDbUrl}/comments//${title}.json`, comment)
-      //@ts-ignore
-      .pipe(map((response: FbCreateResponse) => {
+      .pipe(map((response: Comment) => {
         const newComment = {
           ...comment,
           id: response.name,
@@ -56,9 +55,6 @@ export class CommentsService {
   }
 
   getCommentById(postTitle: string, id: string): Observable<Comment> {
-    console.log('Post by id response: ', this.http.get<Comment>(`${environment.fbDbUrl}/comments/${postTitle}/${id}.json`).subscribe(res => console.log(res)
-    ));
-    
     return this.http.get<Comment>(`${environment.fbDbUrl}/comments/${postTitle}/${id}.json`);
   }
 

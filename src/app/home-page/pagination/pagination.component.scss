@@ -5,6 +5,26 @@
   p {
     text-align: center;
   }
+
+  .btn {
+    width: 100px;
+  }
+
+  .page-button {
+    width: 30px;
+    margin: 5px;
+    border: none;
+  }
+
+  .page-button:hover {
+    background-color: #333333;
+    color: #ccc;
+    transition: all 0.2s ease-in;
+  }
+
+  .select-posts-per-page {
+    width: 60px;
+  }
 }
 
 .prev, .next {
@@ -12,7 +32,6 @@
 }
 
 .prev:hover, .next:hover {
-  margin: 10px;
   background-color: #333333;
   color: #ccc;
   transition: all 0.2s ease-in;

@@ -1,12 +1,13 @@
 .post-comments-container {
     display: flex;
+    justify-content: center;
 }
 
 .post {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 600px;
+    width: 620px;
 
     .header {
         display: flex;

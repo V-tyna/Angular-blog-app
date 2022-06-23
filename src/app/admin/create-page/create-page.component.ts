@@ -4,18 +4,21 @@ import { Post } from 'src/app/shared/interfaces';
 import { PostsService } from 'src/app/services/posts.service';
 import { options } from '../configs/editor.options';
 import { AlertService } from '../shared/services/alert.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-page',
   templateUrl: './create-page.component.html',
   styleUrls: ['./create-page.component.scss']
 })
 export class CreatePageComponent implements OnInit {
-  createPostForm!: FormGroup;
   public froalaOptions: Object = options;
+  private uid: string | null = localStorage.getItem('localId');
 
   constructor(
+    public createPostForm: FormGroup,
     private postService: PostsService,
-    private alert: AlertService
+    private alert: AlertService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -38,10 +41,10 @@ export class CreatePageComponent implements OnInit {
       date: new Date()
     }
 
-    this.postService.create(post).subscribe(() => {
+    this.postService.create(post).subscribe((post) => {
       this.createPostForm.reset();
+      this.router.navigate(['post', `${this.uid}`, `${post.title}`]);
       this.alert.success('Post was created.');
     })
   }
-
 }

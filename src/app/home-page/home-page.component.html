@@ -1,9 +1,7 @@
 <div class="posts" *ngIf="posts; else loading">
   <app-pagination
-    [pageIndex]="pageIndex"
-    [currentPageIndex]="currentPageIndex"
     [numberOfPages]="numberOfPages"
-    [POSTS_PER_PAGE]="POSTS_PER_PAGE"
+    [postsLength]="posts.length"
     (slicedPosts)="getParamsForPagination($event)"
   ></app-pagination>
   <app-post-card
@@ -15,3 +13,5 @@
 <ng-template #loading>
   <p class="text-center">Loading posts...</p>
 </ng-template>
+
+<!-- [POSTS_PER_PAGE]="POSTS_PER_PAGE" -->

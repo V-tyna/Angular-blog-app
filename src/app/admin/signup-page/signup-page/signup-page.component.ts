@@ -10,8 +10,8 @@ import { AuthService } from '../../shared/services/auth.service';
   styleUrls: ['./signup-page.component.scss']
 })
 export class SignupPageComponent implements OnInit {
-  formRegister!: FormGroup;
-  submitted: boolean = false;
+  public formRegister!: FormGroup;
+  public submitted: boolean = false;
 
   constructor(private authService: AuthService,
     private router: Router) { }

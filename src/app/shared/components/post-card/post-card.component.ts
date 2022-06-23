@@ -8,7 +8,7 @@ import { Post } from '../../interfaces';
 })
 export class PostCardComponent implements OnInit {
 
-  @Input() postC!: Post;
+  @Input() public postC!: Post;
 
   constructor() { }
 

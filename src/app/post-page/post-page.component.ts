@@ -11,7 +11,7 @@ import { PostsService } from '../services/posts.service';
 })
 export class PostPageComponent implements OnInit {
 
-  public post$?: Observable<Post>;
+  public post$?: Observable<Post | undefined>;
 
   constructor(
     private route: ActivatedRoute,
