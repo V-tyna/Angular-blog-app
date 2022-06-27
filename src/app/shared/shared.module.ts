@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-
-import 'froala-editor/js/plugins.pkgd.min.js';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-import { AlertComponent } from '../admin/shared/components/alert/alert.component';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import 'froala-editor/js/plugins.pkgd.min.js';
+
+import { AlertComponent } from '../admin/shared/components/alert/alert.component';
 
 @NgModule({
   imports: [
     HttpClientModule,
     CommonModule,
-    FroalaEditorModule.forRoot(), 
+    FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot()
   ],
   exports: [

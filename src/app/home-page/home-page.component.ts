@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Post } from '../shared/interfaces';
+
 import { PostsService } from '../services/posts.service';
 import { sortByDate } from '../shared/helpers/sortByDate';
+import { Post } from '../shared/interfaces';
 
 @Component({
   selector: 'app-home-page',
@@ -11,17 +12,17 @@ import { sortByDate } from '../shared/helpers/sortByDate';
 })
 export class HomePageComponent implements OnInit, OnDestroy {
 
-  public posts: Post[] = [];
-  public currentPosts: Post[] = [];
+  public posts: Post[];
+  public currentPosts: Post[];
   public numberOfPages: number = 0;
   public POSTS_PER_PAGE: number = 5;
-  private postSubscription?: Subscription;
+  private postSubscription: Subscription;
 
   constructor(
     private postsService: PostsService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.postSubscription = this.postsService.getAllPosts().subscribe((posts) => {
       this.posts = sortByDate(posts);
       this.currentPosts = this.posts.slice(0, 5);
@@ -31,16 +32,15 @@ export class HomePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.postSubscription?.unsubscribe();
-  }
-
-  getParamsForPagination(arrToEmit: Array<number>) {
+  public getParamsForPagination(arrToEmit: number[]) {
     const start = arrToEmit[0];
     const end = arrToEmit[1];
     this.POSTS_PER_PAGE = arrToEmit[1];
-    if (this.posts && end - this.POSTS_PER_PAGE >= this.posts.length) return;
+    if (this.posts && end - this.POSTS_PER_PAGE >= this.posts.length) { return; }
     this.currentPosts = this.posts?.slice(start, end);
   }
 
+  public ngOnDestroy(): void {
+    this.postSubscription?.unsubscribe();
+  }
 }

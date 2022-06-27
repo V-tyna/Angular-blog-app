@@ -1,8 +1,9 @@
-import { AfterContentChecked, AfterContentInit, AfterViewInit, Component, DoCheck, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommentsService } from 'src/app/services/comments.service';
 import { sortByDate } from 'src/app/shared/helpers/sortByDate';
 import { Comment } from 'src/app/shared/interfaces';
+
 import { AlertService } from '../shared/services/alert.service';
 
 @Component({
@@ -12,38 +13,37 @@ import { AlertService } from '../shared/services/alert.service';
 })
 export class MyCommentsPageComponent implements OnInit, OnChanges, OnDestroy {
 
-  public comments?: Comment[];
-  private userCommentsSubscription?: Subscription;
-  private removeCommentSubscription?: Subscription;
+  public comments: Comment[];
+  private userCommentsSubscription: Subscription;
+  private removeCommentSubscription: Subscription;
 
   constructor(
     private commentsService: CommentsService,
     private alert: AlertService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.comments = [];
-    this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe(comments => {
+    this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe((comments: Comment[]) => {
       this.comments = sortByDate(comments);
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe(comments => {
+  public ngOnChanges(changes: SimpleChanges): void {
+    this.userCommentsSubscription = this.commentsService.getAllUserComments().subscribe((comments: Comment[]) => {
       this.comments = sortByDate(comments);
     });
   }
 
-  removeComment(title: string, id: string) {
+  public removeComment(title: string, id: string) {
     this.removeCommentSubscription = this.commentsService.removeComment(title, id).subscribe(() => {
-      this.comments = this.comments?.filter(comment => comment.id !== id);
+      this.comments = this.comments.filter((comment: Comment) => comment.id !== id);
       this.alert.danger('Comment was deleted.');
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.userCommentsSubscription?.unsubscribe();
     this.removeCommentSubscription?.unsubscribe();
   }
-
 }

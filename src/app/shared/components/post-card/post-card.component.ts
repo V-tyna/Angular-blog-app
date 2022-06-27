@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
 import { Post } from '../../interfaces';
 
 @Component({
@@ -6,13 +7,8 @@ import { Post } from '../../interfaces';
   templateUrl: './post-card.component.html',
   styleUrls: ['./post-card.component.scss']
 })
-export class PostCardComponent implements OnInit {
-
-  @Input() public postC!: Post;
+export class PostCardComponent {
+  @Input() public postC: Post;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

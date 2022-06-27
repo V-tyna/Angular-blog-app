@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
+
 import { AuthService } from '../admin/shared/services/auth.service';
 
 @Injectable()
@@ -12,14 +13,13 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  public intercept<T>(req: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
     if (this.auth.isAuthenticated()) {
       req = req.clone({
         setParams: {
-          //@ts-ignore
-          auth: this.auth.token
+          auth: this.auth.token || ''
         }
-      })
+      });
     }
     return next.handle(req)
     .pipe(
@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
           queryParams: {
             authFailed: true
           }
-        })
+        });
       }
       return throwError(() => new Error(error.error));
     }));

@@ -1,4 +1,7 @@
-<div class="post-comments-container" *ngIf="post$ | async as post; else loading">
+<div
+  class="post-comments-container"
+  *ngIf="post$ | async as post; else loading"
+>
   <div>
     <div class="post">
       <div class="header">
@@ -17,10 +20,9 @@
     <app-post-create-comment [post]="post"></app-post-create-comment>
   </div>
 
-  <!-- *ngIf="arr.length; else noComments" -->
   <app-post-show-comments [post]="post"></app-post-show-comments>
- </div> 
+</div>
 
-  <ng-template #loading>
-    <p class="text-center">Post loading...</p>
-  </ng-template>
+<ng-template #loading>
+  <p class="text-center">Post loading...</p>
+</ng-template>

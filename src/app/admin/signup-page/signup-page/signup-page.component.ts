@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/shared/interfaces';
+
 import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
@@ -13,17 +14,19 @@ export class SignupPageComponent implements OnInit {
   public formRegister!: FormGroup;
   public submitted: boolean = false;
 
-  constructor(private authService: AuthService,
-    private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.formRegister = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)])
-    })
+    });
   }
 
-  submit() {
+  public submit(): void {
     if (this.formRegister.invalid) {
       return;
     }
@@ -32,7 +35,7 @@ export class SignupPageComponent implements OnInit {
       email: this.formRegister.value.email,
       password: this.formRegister.value.password,
       returnSecureToken: true
-    }
+    };
 
     this.authService.signup(user).subscribe({
       next: () => {
@@ -43,8 +46,6 @@ export class SignupPageComponent implements OnInit {
       complete: () => {
         this.submitted = false;
       }
-    }
-    )
+    });
   }
-
 }
