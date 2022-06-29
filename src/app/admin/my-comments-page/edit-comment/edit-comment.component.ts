@@ -9,8 +9,7 @@ import { AlertService } from '../../shared/services/alert.service';
 
 @Component({
   selector: 'app-edit-comment',
-  templateUrl: './edit-comment.component.html',
-  styleUrls: ['./edit-comment.component.scss']
+  templateUrl: './edit-comment.component.html'
 })
 export class EditCommentComponent implements OnInit, OnDestroy {
 
@@ -35,7 +34,7 @@ export class EditCommentComponent implements OnInit, OnDestroy {
       this.comment = comment;
 
       this.formEditComment = new FormGroup({
-        author: new FormControl(comment.author, Validators.required),
+        authorName: new FormControl(comment.authorName, Validators.required),
         comment: new FormControl(comment.comment, Validators.required)
       });
     });
@@ -49,7 +48,7 @@ export class EditCommentComponent implements OnInit, OnDestroy {
     this.submitted = true;
     const newComment = {
       ...this.comment,
-      author: this.formEditComment?.value.author,
+      authorName: this.formEditComment?.value.authorName,
       comment: this.formEditComment?.value.comment
     };
 

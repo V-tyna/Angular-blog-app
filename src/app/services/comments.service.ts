@@ -16,21 +16,6 @@ export class CommentsService {
   constructor(private http: HttpClient) {
   }
 
-  public createComment(comment: Comment, title: string): Observable<Comment> {
-    return this.http.post<Comment>(`${environment.fbDbUrl}/comments//${title}.json`, comment)
-      .pipe(map((response: Comment) => {
-        return {
-          ...comment,
-          id: response.name,
-          date: new Date(comment.date)
-        };
-      }));
-  }
-
-  public writeCommentId(commentWithId: Comment): Observable<Comment> {
-    return this.http.patch<Comment>(`${environment.fbDbUrl}/comments/${commentWithId.postTitle}/${commentWithId.id}.json`, commentWithId);
-  }
-
   public getAllComments(title: string): Observable<Comment[] | undefined> {
     return this.http.get<Comment>(`${environment.fbDbUrl}/comments/${title}.json`)
       .pipe(map((res: Comment) => {
@@ -57,6 +42,21 @@ export class CommentsService {
 
   public getCommentById(postTitle: string, id: string): Observable<Comment> {
     return this.http.get<Comment>(`${environment.fbDbUrl}/comments/${postTitle}/${id}.json`);
+  }
+
+  public createComment(comment: Comment, title: string): Observable<Comment> {
+    return this.http.post<Comment>(`${environment.fbDbUrl}/comments//${title}.json`, comment)
+      .pipe(map((response: Comment) => {
+        return {
+          ...comment,
+          id: response.name,
+          date: new Date(comment.date)
+        };
+      }));
+  }
+
+  public writeCommentId(commentWithId: Comment): Observable<Comment> {
+    return this.http.patch<Comment>(`${environment.fbDbUrl}/comments/${commentWithId.postTitle}/${commentWithId.id}.json`, commentWithId);
   }
 
   public editComment(comment: Comment): Observable<Comment> {

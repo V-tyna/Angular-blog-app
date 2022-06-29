@@ -15,17 +15,6 @@ export class PostsService {
 
   constructor(private http: HttpClient) { }
 
-  public create(post: Post): Observable<Post> {
-    return this.http.post<Post>(`${environment.fbDbUrl}/posts/${this.uid}.json`, post)
-      .pipe(map((response: Post) => {
-        return {
-          ...post,
-          id: response.name,
-          date: new Date(post.date)
-        };
-      }));
-  }
-
   public getAllPosts(): Observable<Post[]> {
     return this.http.get(`${environment.fbDbUrl}/posts.json`)
       .pipe(map((res: { [key: string]: any }) => {
@@ -72,12 +61,23 @@ export class PostsService {
     return this.http.get<Post>(`${environment.fbDbUrl}/posts/${this.uid}/${id}.json`);
   }
 
-  public removePost(id: string | undefined): Observable<void> {
-    return this.http.delete<void>(`${environment.fbDbUrl}/posts/${this.uid}/${id}.json`);
+  public create(post: Post): Observable<Post> {
+    return this.http.post<Post>(`${environment.fbDbUrl}/posts/${this.uid}.json`, post)
+      .pipe(map((response: Post) => {
+        return {
+          ...post,
+          id: response.name,
+          date: new Date(post.date)
+        };
+      }));
   }
 
   public updatePost(id: string, post: Post): Observable<Post> {
     return this.http.patch<Post>(`${environment.fbDbUrl}/posts/${this.uid}/${id}.json`, post);
+  }
+
+  public removePost(id: string | undefined): Observable<void> {
+    return this.http.delete<void>(`${environment.fbDbUrl}/posts/${this.uid}/${id}.json`);
   }
 
   private getDataHelper(res: { [key: string]: any }): { result: Post[], data: Array<{ key: Post }>, keys: string[] } {

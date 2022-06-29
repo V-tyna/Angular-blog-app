@@ -17,9 +17,6 @@ import { PostCreateCommentComponent } from './shared/components/post-create-comm
 import { PostShowCommentsComponent } from './shared/components/post-show-comments/post-show-comments.component';
 import { SharedModule } from './shared/shared.module';
 
-
-
-
 const INTERCEPTOR_PROVIDER: Provider = {
   multi: true,
   provide: HTTP_INTERCEPTORS,

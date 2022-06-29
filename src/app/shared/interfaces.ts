@@ -21,9 +21,9 @@ export interface Post {
 
 export interface Comment {
   id?: string;
-  author: string;
+  authorName: string;
   comment: string;
-  follow: boolean;
+  isFollowed: boolean;
   date: Date;
   uid: string;
   postTitle: string;

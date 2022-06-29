@@ -40,6 +40,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.currentPosts = this.posts?.slice(start, end);
   }
 
+  public trackByFn(index: number, post: Post): string {
+    return post.title + post.author;
+  }
+
   public ngOnDestroy(): void {
     this.postSubscription?.unsubscribe();
   }

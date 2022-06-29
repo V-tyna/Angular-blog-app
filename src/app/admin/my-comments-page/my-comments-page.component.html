@@ -11,16 +11,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let comment of comments; let i = index">
+      <tr *ngFor="let comment of comments; let i = index; trackBy: trackByFn">
         <td>{{ i + 1 }}</td>
-        <td>{{ comment.author }}</td>
+        <td>{{ comment.authorName }}</td>
         <td>{{ comment.postTitle }}</td>
-        <td *ngIf="comment.follow; else no">{{ "yes" }}</td>
+        <td *ngIf="comment.isFollowed; else no">{{ "yes" }}</td>
         <td>{{ comment.date | date: "medium" }}</td>
         <td>
           <button
             class="btn btn-link open"
-            [routerLink]="['/admin', 'my_comment', comment.postTitle, comment.id, 'edit']"
+            [routerLink]="[
+              '/admin',
+              'my_comment',
+              comment.postTitle,
+              comment.id,
+              'edit'
+            ]"
           >
             Edit
           </button>

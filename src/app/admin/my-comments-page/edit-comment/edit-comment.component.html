@@ -4,20 +4,20 @@
       class="form-control"
       [ngClass]="{
         invalid:
-          formEditComment.get('author')?.touched &&
-          formEditComment.get('author')?.invalid
+          formEditComment.get('authorName')?.touched &&
+          formEditComment.get('authorName')?.invalid
       }"
     >
       <label for="author">Comment author:</label>
-      <input id="author" type="text" formControlName="author" />
+      <input id="author" type="text" formControlName="authorName" />
       <div
         *ngIf="
-          formEditComment.get('author')?.touched &&
-          formEditComment.get('author')?.invalid
+          formEditComment.get('authorName')?.touched &&
+          formEditComment.get('authorName')?.invalid
         "
         class="validation"
       >
-        <small *ngIf="formEditComment.get('author')?.errors?.['required']">
+        <small *ngIf="formEditComment.get('authorName')?.errors?.['required']">
           Field "Comment author" shouldn't be empty
         </small>
       </div>

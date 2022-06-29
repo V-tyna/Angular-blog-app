@@ -5,8 +5,8 @@
     (slicedPosts)="getParamsForPagination($event)"
   ></app-pagination>
   <app-post-card
-    *ngFor="let post of currentPosts"
-    [postC]="post"
+    *ngFor="let post of currentPosts; trackBy: trackByFn"
+    [post]="post"
   ></app-post-card>
 </div>
 

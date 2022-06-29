@@ -13,7 +13,7 @@
   </button>
   <button
     class="page-button"
-    *ngFor="let page of currentButtons"
+    *ngFor="let page of currentButtons; trackBy: trackByFn"
     (click)="getPage(page)"
   >
     {{ page + 1 }}

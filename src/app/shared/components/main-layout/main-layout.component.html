@@ -2,12 +2,16 @@
 <nav class="navbar main bg-primary">
   <h1><a class="header-link" [routerLink]="['/']">Angular Blog</a></h1>
   <div>
-    <a class="header-link" [routerLink]="['/admin/dashboard']">To admin panel</a>
-    <a *ngIf="!auth.isAuthenticated()" class="header-link" [routerLink]="['/login']">Log in</a>
-    <a *ngIf="!auth.isAuthenticated()" class="header-link" [routerLink]="['/signup']">Sign up</a>
+    <a class="header-link" [routerLink]="['/admin/dashboard']"
+      >To admin panel</a
+    >
+    <ng-container *ngIf="!isAuthenticated">
+      <a class="header-link" [routerLink]="['/login']">Log in</a>
+      <a class="header-link" [routerLink]="['/signup']">Sign up</a>
+    </ng-container>
   </div>
-</nav>    
+</nav>
 
 <div class="container">
   <router-outlet></router-outlet>
-<!-- </div> -->
+</div>

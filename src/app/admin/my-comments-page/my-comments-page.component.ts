@@ -42,6 +42,10 @@ export class MyCommentsPageComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  public trackByFn(index: number, comment: Comment): string {
+    return comment.id + comment.authorName;
+  }
+
   public ngOnDestroy(): void {
     this.userCommentsSubscription?.unsubscribe();
     this.removeCommentSubscription?.unsubscribe();

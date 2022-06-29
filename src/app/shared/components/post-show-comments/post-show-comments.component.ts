@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommentsService } from 'src/app/services/comments.service';
 
@@ -9,10 +9,9 @@ export { sortByDate } from '../../helpers/sortByDate';
 
 @Component({
   selector: 'app-post-show-comments',
-  templateUrl: './post-show-comments.component.html',
-  styleUrls: ['./post-show-comments.component.scss']
+  templateUrl: './post-show-comments.component.html'
 })
-export class PostShowCommentsComponent implements OnDestroy, OnChanges {
+export class PostShowCommentsComponent implements OnDestroy, AfterContentChecked {
 
   @Input() public post: Post;
 
@@ -22,12 +21,16 @@ export class PostShowCommentsComponent implements OnDestroy, OnChanges {
 
   constructor(private commentsService: CommentsService) { }
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  public ngAfterContentChecked(): void {
     this.commentsSubscription = this.commentsService.getAllComments(this.post.title).subscribe();
 
     this.commentsArraySubscription = this.commentsService.comments$.subscribe((comments: Comment[]) => {
       this.comments = sortByDate(comments);
     });
+  }
+
+  public trackByFn(index: number, comment: Comment): string {
+    return comment.id + comment.authorName;
   }
 
   public ngOnDestroy(): void {

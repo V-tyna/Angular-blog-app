@@ -17,8 +17,6 @@ export class PaginationComponent implements OnChanges {
   @Input() public numberOfPages: number = 0;
   @Output() public slicedPosts = new EventEmitter<number[]>();
 
-  constructor() { }
-
   public ngOnChanges(changes: SimpleChanges): void {
     if (!this.currentButtons.length) {
       this.countPages();
@@ -93,6 +91,10 @@ export class PaginationComponent implements OnChanges {
 
     const arrToEmit = [firstElem, lastElem, this.POSTS_PER_PAGE, this.numberOfPages];
     this.slicedPosts.emit(arrToEmit);
+  }
+
+  public trackByFn(index: number, page: number): string {
+    return page.toString() + 'button';
   }
 
   private countPages(): number[] {

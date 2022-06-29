@@ -1,24 +1,25 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, PreloadingStrategy, RouterModule, Routes } from '@angular/router';
 
 import { LoginPageComponent } from './admin/login-page/login-page.component';
 import { SignupPageComponent } from './admin/signup-page/signup-page/signup-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { PostPageComponent } from './post-page/post-page.component';
+import { routesPaths } from './routes';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 
 const routes: Routes = [
   {
-    path: '', component: MainLayoutComponent, children: [
-      { path: '', redirectTo: '/', pathMatch: 'full' },
-      { path: '', component: HomePageComponent },
-      { path: 'login', component: LoginPageComponent},
-      { path: 'signup', component: SignupPageComponent},
-      { path: 'post/:id/:title', component: PostPageComponent }
+    path: routesPaths.home, component: MainLayoutComponent, children: [
+      { path: routesPaths.home, redirectTo: '/', pathMatch: 'full' },
+      { path: routesPaths.home, component: HomePageComponent },
+      { path: routesPaths.login, component: LoginPageComponent },
+      { path: routesPaths.signup, component: SignupPageComponent },
+      { path: routesPaths.postPage, component: PostPageComponent }
     ]
   },
   {
-    path: 'admin', loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule)
+    path: routesPaths.admin, loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule)
   }
 ];
 

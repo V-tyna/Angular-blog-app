@@ -9,8 +9,7 @@ import { AlertService } from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-edit-page',
-  templateUrl: './edit-page.component.html',
-  styleUrls: ['./edit-page.component.scss']
+  templateUrl: './edit-page.component.html'
 })
 export class EditPageComponent implements OnInit, OnDestroy {
   public formEditPost: FormGroup;
@@ -32,11 +31,11 @@ export class EditPageComponent implements OnInit, OnDestroy {
         return this.postsService.getUserPostById(params['id']);
       })
     ).subscribe((post: Post) => {
-        this.editingPost = post;
-        this.formEditPost = new FormGroup({
-          title: new FormControl(post.title, Validators.required),
-          textContent: new FormControl(post.textContent, Validators.required)
-        });
+      this.editingPost = post;
+      this.formEditPost = new FormGroup({
+        title: new FormControl(post.title, Validators.required),
+        textContent: new FormControl(post.textContent, Validators.required)
+      });
     });
   }
 

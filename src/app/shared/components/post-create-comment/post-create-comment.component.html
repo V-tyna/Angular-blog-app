@@ -1,18 +1,19 @@
-<div class="comment-container" *ngIf="auth.isAuthenticated(); else pleaseLogin">
+<div class="comment-container" *ngIf="isAuthenticated; else pleaseLogin">
   <form class="form-comment" [formGroup]="createComment" (ngSubmit)="submit()">
-    
     <div class="form-control author-name">
       <label for="author-name">Name:</label>
-      <input id="author-name" type="text" formControlName="author" />
+      <input id="author-name" type="text" formControlName="authorName" />
     </div>
 
     <div class="form-control">
       <label>Comment:</label>
-      <div [froalaEditor] formControlName="comment" ></div>
+      <div [froalaEditor] formControlName="comment"></div>
     </div>
 
     <div class="form-control">
-      <input type="checkbox" formControlName="follow"/><label> Follow this post</label>
+      <input type="checkbox" formControlName="isFollowed" /><label>
+        Follow this post</label
+      >
     </div>
 
     <button class="btn btn-dark" type="submit">Leave a comment</button>
@@ -20,6 +21,6 @@
 </div>
 
 <ng-template #pleaseLogin>
-  <h1> To leave a comment, please login: </h1>
+  <h1>To leave a comment, please login:</h1>
   <a class="header-link" [routerLink]="['/admin', 'login']">Go to login page</a>
 </ng-template>

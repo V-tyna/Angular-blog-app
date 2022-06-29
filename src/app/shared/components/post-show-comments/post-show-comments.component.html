@@ -1,8 +1,8 @@
 <div class="all-comments" *ngIf="comments?.length; else noComments">
-  <h2 class="text-center">Comments: </h2>
+  <h2 class="text-center">Comments:</h2>
   <app-post-comment-card
-    *ngFor="let comment of comments"
-    [commentC]="comment"
+    *ngFor="let comment of comments; trackBy: trackByFn"
+    [comment]="comment"
   ></app-post-comment-card>
 </div>
 

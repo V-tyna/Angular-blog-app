@@ -1,7 +1,8 @@
-<div class="comment" *ngIf="commentC; else loading">
-  <div [froalaView]="commentC.comment"></div>
+<div class="comment" *ngIf="comment; else loading">
+  <div [froalaView]="comment.comment"></div>
   <div class="comment-footer">
-    <small>{{ commentC.author }}</small> <small>{{ commentC.date | date: "dd.MM.YY hh:mm a" }}</small>
+    <small>{{ comment.authorName }}</small>
+    <small>{{ comment.date | date: "dd.MM.YY hh:mm a" }}</small>
   </div>
 </div>
 

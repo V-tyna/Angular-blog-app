@@ -4,11 +4,8 @@ import { Post } from '../../interfaces';
 
 @Component({
   selector: 'app-post-card',
-  templateUrl: './post-card.component.html',
-  styleUrls: ['./post-card.component.scss']
+  templateUrl: './post-card.component.html'
 })
 export class PostCardComponent {
-  @Input() public postC: Post;
-
-  constructor() { }
+  @Input() public post: Post;
 }

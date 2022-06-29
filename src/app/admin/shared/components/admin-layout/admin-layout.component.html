@@ -11,7 +11,7 @@
     </li>
   </ul>
 
-  <ul *ngIf="auth.isAuthenticated()">
+  <ul *ngIf="isAuthenticated">
     <li routerLinkActive="active">
       <a [routerLink]="['/admin', 'comments']">My comments</a>
     </li>
@@ -20,10 +20,10 @@
     </li>
     <li routerLinkActive="active">
       <a [routerLink]="['/admin', 'create']">Create post</a>
-    </li>    
+    </li>
     <li>
       <a href="#" (click)="logout($event)">Exit</a>
-    </li>    
+    </li>
   </ul>
 </nav>
 

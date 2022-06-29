@@ -9,14 +9,14 @@ export class AlertService {
   public alert$ = new Subject<Alert>();
 
   public success(text: string): void {
-    this.alert$.next({type: 'success', text});
+    this.alert$.next({ type: 'success', text });
   }
 
   public warning(text: string): void {
-    this.alert$.next({type: 'warning', text});
+    this.alert$.next({ type: 'warning', text });
   }
 
   public danger(text: string): void {
-    this.alert$.next({type: 'danger', text});
+    this.alert$.next({ type: 'danger', text });
   }
 }

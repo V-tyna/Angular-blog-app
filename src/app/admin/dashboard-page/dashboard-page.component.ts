@@ -35,6 +35,10 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  public trackByFn(index: number, post: Post): string {
+    return post.title + post.author;
+  }
+
   public ngOnDestroy(): void {
     this.postsSubscription?.unsubscribe();
     this.removePostSubscription?.unsubscribe();
