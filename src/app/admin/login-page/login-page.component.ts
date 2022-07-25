@@ -48,9 +48,11 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
+    const {email, password} = this.formLogin.value;
+
     const user: User = {
-      email: this.formLogin.value.email,
-      password: this.formLogin.value.password,
+      email,
+      password,
       returnSecureToken: true
     };
 

@@ -69,6 +69,11 @@ export class AuthService {
       case 'EMAIL_NOT_FOUND':
         this.error$.next('User with this email isn\'t registered');
         break;
+      case 'EMAIL_EXISTS':
+        this.error$.next('User with this email is already registered');
+        break;
+      default:
+        this.error$.next('Error');
     }
     return throwError(() => new Error(message));
   }

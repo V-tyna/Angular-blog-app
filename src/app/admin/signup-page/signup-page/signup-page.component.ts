@@ -30,9 +30,11 @@ export class SignupPageComponent implements OnInit {
       return;
     }
 
+    const {email, password} = this.formRegister.value;
+
     const user: User = {
-      email: this.formRegister.value.email,
-      password: this.formRegister.value.password,
+      email,
+      password,
       returnSecureToken: true
     };
 
